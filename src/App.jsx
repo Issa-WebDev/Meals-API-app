@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Items from "./components/items";
+import Items from "./components/Items";
 
 const App = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood"
-      );
+      try {
+        const response = await fetch(
+          "https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood"
+        );
 
-      const data = await response.json();
-      if (data && data.meals.length > 0) setData(data.meals);
+        const data = await response.json();
+        setData(data.meals);
+      } catch (error) {
+        console.log("ERREUR: ", error);
+      }
     };
 
     getData();
